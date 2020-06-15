@@ -1,0 +1,13 @@
+<!--
+Description: This app uses the New API to gather and present new on all things Crypto.
+Version No: v1
+Build Date: 5-2020
+
+File Management: GIT
+
+-->
+
+
+<resources>
+    <string name="app_name">NewsApiTest</string>
+</resources>
