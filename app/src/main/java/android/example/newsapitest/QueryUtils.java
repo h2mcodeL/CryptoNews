@@ -135,18 +135,33 @@ public class QueryUtils {
         try {
 
             JSONObject jsonObject = new JSONObject(newsInfoJson);
-
             JSONArray arr  =jsonObject.getJSONArray("sources");
 
             //looping through features
             for (int x = 0; x< arr.length(); x++) {
                 JSONObject currentInfo = arr.getJSONObject(x);
 
-                Log.i("Main", currentInfo.getString("name"));
+               String desc = currentInfo.getString("description");     //the name must be exactly the same as in the JSON info. e.g description or url
+               String url = currentInfo.getString("url");               //i cannot use my own name such as weburl.
 
-               String desc = currentInfo.getString("description");
+               Log.i(LOG_TAG,"WHAT IS THE LINK: " + url);
 
-               CryptoInfo cryptodetail = new CryptoInfo(desc);
+               //Extract some other areas from the linked website. e.g author
+                //The news API site only gives category, so we will use this
+
+                /*
+                String category;
+
+                JSONArray tags = currentInfo.getJSONArray("category");
+                if(tags != null && tags.length() > 0) {
+                    JSONObject tagsObject = tags.getJSONObject(0);
+                    category = tagsObject.optString("category", "No Category");
+
+                } else category = "No category name";
+                */
+
+
+               CryptoInfo cryptodetail = new CryptoInfo(desc, url);
                newItems.add(cryptodetail);
             }
 

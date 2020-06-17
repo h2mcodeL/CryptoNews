@@ -24,18 +24,20 @@ public class CryptoAdapter  extends ArrayAdapter<CryptoInfo> {
 
         //check if the existing view is being reused?
 
-        View cryptolist = convertView;
-        if (cryptolist == null ) {
-            cryptolist = LayoutInflater.from(getContext()).inflate(R.layout.custom_layout, parent, false);
-
+        //View cryptolist = convertView;
+        if (convertView == null ) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_layout, parent, false);
         }
 
         CryptoInfo currentnewscrypto = getItem(position);
 
-        TextView tv1 = cryptolist.findViewById(R.id.tv1);
+        TextView tv1 = convertView.findViewById(R.id.tv1);
         tv1.setText(currentnewscrypto.getTitle());
 
+        TextView tv2 = convertView.findViewById(R.id.tv2);
+        tv2.setText(currentnewscrypto.getUrl());
 
-        return cryptolist;
+
+        return convertView;
     }
 }

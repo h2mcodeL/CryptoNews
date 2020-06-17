@@ -66,11 +66,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 CryptoInfo currentItem = mAdapter.getItem(position);
 
                 /* We only have one item in our unique layout, so create a single String */
-                String news_url = currentItem.getTitle();
-                Log.i(LOG_TAG, news_url);
+                String news_url = currentItem.getUrl();
+                Log.i(LOG_TAG, "The new URL is: " + news_url);
 
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW);
-                websiteIntent.setData(Uri.parse(url_response));
+                websiteIntent.setData(Uri.parse(news_url));
 
                 startActivity(websiteIntent);
             }
@@ -91,10 +91,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if(networkInfo != null && networkInfo.isConnected()) {
 
             //Get a reference to the loaderManager
-            Loader<List<CryptoInfo>> loaderManager = getSupportLoaderManager().initLoader(CRYPTO_INFO_LOADER, null, this);
+            LoaderManager loaderManager = getSupportLoaderManager();
+          //  Loader<List<CryptoInfo>> loaderManager = getSupportLoaderManager().initLoader(CRYPTO_INFO_LOADER, null, this);
 
             //Initialize the loader, pass in the int ID
-          //  loaderManager.initLoader(CRYPTO_INFO_LOADER, null, this);
+            loaderManager.initLoader(CRYPTO_INFO_LOADER, null, this);
         } else {
             // else display error, hide the loading indicator to display the error msg
             View loadingIndicator = findViewById(R.id.progressBar);
