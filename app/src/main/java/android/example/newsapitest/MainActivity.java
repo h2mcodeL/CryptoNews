@@ -30,8 +30,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /** TAG FOR TESTING LOG MESSAGES */
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
+
     /* URI TO QUERY THE NEWS API WEBSITE DATASET */
-    String url_response = "https://newsapi.org/v2/sources?apiKey=54d7a73eeb264a25887a8f8e5deb8f6d";
+   // String url_response = "https://newsapi.org/v2/sources?apiKey=54d7a73eeb264a25887a8f8e5deb8f6d";
+
+    String url_response = "http://newsapi.org/v2/everything?q=cryptocurrency&from=2020-05-17&sortBy=publishedAt&apiKey=54d7a73eeb264a25887a8f8e5deb8f6d";
 
     /* Loader ID */
     private static final int CRYPTO_INFO_LOADER = 1;
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //create a new adapter that takes an empty list of news items
         mAdapter = new CryptoAdapter(this, new ArrayList<CryptoInfo>());
 
-        Log.i(LOG_TAG, mAdapter + "news output");
+        //Log.i(LOG_TAG, mAdapter + "news output");
 
         newslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -65,9 +68,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 //find the current newsitem that was clicked on
                 CryptoInfo currentItem = mAdapter.getItem(position);
 
-                /* We only have one item in our unique layout, so create a single String */
+                /* We only have one item in our unique layout, so create a single String which is a url for the web link */
+                assert currentItem != null;
                 String news_url = currentItem.getUrl();
-                Log.i(LOG_TAG, "The new URL is: " + news_url);
+               // Log.i(LOG_TAG, "The new URL is: " + news_url);
 
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW);
                 websiteIntent.setData(Uri.parse(news_url));
@@ -113,9 +117,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //this gets the url link to the API website
         Uri baseUri = Uri.parse(url_response);
-
-
-
         return new CryptoLoader(this, baseUri.toString());
     }
 

@@ -127,6 +127,7 @@ public class QueryUtils {
             return null;
         }
 
+
         //we use the List<E> object and not ArrayList<E>
         //this JSON list only has one stage, as shown above, so we go straight into the sources arraylist, no stepping in
 
@@ -135,19 +136,16 @@ public class QueryUtils {
         try {
 
             JSONObject jsonObject = new JSONObject(newsInfoJson);
-            JSONArray arr  =jsonObject.getJSONArray("sources");
+            JSONArray arr  =jsonObject.getJSONArray("articles");
 
             //looping through features
             for (int x = 0; x< arr.length(); x++) {
                 JSONObject currentInfo = arr.getJSONObject(x);
 
+               String title = currentInfo.getString("title");            //this is json subject title - which is name
                String desc = currentInfo.getString("description");     //the name must be exactly the same as in the JSON info. e.g description or url
                String url = currentInfo.getString("url");               //i cannot use my own name such as weburl.
-
-               Log.i(LOG_TAG,"WHAT IS THE LINK: " + url);
-
-               //Extract some other areas from the linked website. e.g author
-                //The news API site only gives category, so we will use this
+               String author = currentInfo.getString("author");
 
                 /*
                 String category;
@@ -160,8 +158,7 @@ public class QueryUtils {
                 } else category = "No category name";
                 */
 
-
-               CryptoInfo cryptodetail = new CryptoInfo(desc, url);
+               CryptoInfo cryptodetail = new CryptoInfo(title, desc, url, author);
                newItems.add(cryptodetail);
             }
 

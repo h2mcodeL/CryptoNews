@@ -31,11 +31,18 @@ public class CryptoAdapter  extends ArrayAdapter<CryptoInfo> {
 
         CryptoInfo currentnewscrypto = getItem(position);
 
-        TextView tv1 = convertView.findViewById(R.id.tv1);
-        tv1.setText(currentnewscrypto.getTitle());
+        assert currentnewscrypto != null;
+        TextView titleView = convertView.findViewById(R.id.tv1);
+        titleView.setText(currentnewscrypto.getTitle());
 
-        TextView tv2 = convertView.findViewById(R.id.tv2);
-        tv2.setText(currentnewscrypto.getUrl());
+      // TextView urlview = convertView.findViewById(R.id.urllink);
+       // urlview.setText(currentnewscrypto.getUrl());
+
+        TextView descView = convertView.findViewById(R.id.descview);
+        descView.setText(currentnewscrypto.getDesc());
+
+        TextView authorView = convertView.findViewById(R.id.authorview);
+        authorView.setText(currentnewscrypto.getAuthor());
 
 
         return convertView;
