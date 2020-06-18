@@ -9,9 +9,31 @@ File Management: GIT
 
 
 <resources>
-    <string name="app_name">NewsApiTest</string>
+    <string name="app_name">Crypto News</string>
 
     <string name="searching_for_news">Searching for news items!</string>
     <string name="no_internet_connection">No Internet Connection!</string>
     <string name="no_news">Sorry no items found!</string>
+
+    <!-- settings for the shared preferences -->
+    <string name="setting_earliest_date_default"> Enter the date</string>
+    <string name="settings_earliest_date_key">Set order from - date </string>
+    <string name="settings_earliest_date_label"> Earliest Date e.g. 2020-05-01</string>
+
+    <string name="settings_max_date_default">Maximum date default </string>
+    <string name="settings_max_date_key"> Earliest Date Key</string>
+    <string name="settings_max_date_label"> Earliest Date Label</string>
+
+    <string name="settings_orderby_default"> ORDER by default</string>
+    <string name="settings_orderby_key"> Order by key</string>
+    <string name="settings_orderby_label"> Orderby Label</string>
+
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">Settings Title</string>
+
+    <!-- string name="newapikey">54d7a73eeb264a25887a8f8e5deb8f6d</string -->
+
+
+
+
 </resources>

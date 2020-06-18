@@ -8,11 +8,15 @@ import androidx.loader.content.Loader;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -32,9 +36,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     /* URI TO QUERY THE NEWS API WEBSITE DATASET */
-   // String url_response = "https://newsapi.org/v2/sources?apiKey=54d7a73eeb264a25887a8f8e5deb8f6d";
 
-    String url_response = "http://newsapi.org/v2/everything?q=cryptocurrency&from=2020-05-17&sortBy=publishedAt&apiKey=54d7a73eeb264a25887a8f8e5deb8f6d";
+   String url_response = "http://newsapi.org/v2/everything?";
+
 
     /* Loader ID */
     private static final int CRYPTO_INFO_LOADER = 1;
@@ -115,9 +119,32 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<CryptoInfo>> onCreateLoader(int id, @Nullable Bundle args) {
 
+        //We create the items to store in the shared preference and also from the url structure
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //this creates the Orderby view in the SharedPreference pane
+        String orderFrom = sharedPreferences.getString(
+                getString(R.string.settings_earliest_date_key),
+                getString(R.string.settings_earliest_date_label));
+
+        String subject = "cryptocurrency";
+        String sortBy = "publishedAt";
+
         //this gets the url link to the API website
         Uri baseUri = Uri.parse(url_response);
-        return new CryptoLoader(this, baseUri.toString());
+
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        uriBuilder.appendQueryParameter("q", subject);
+        uriBuilder.appendQueryParameter("from", orderFrom);
+        uriBuilder.appendQueryParameter("sortBy",  sortBy);
+
+        //you will have to register with newapi to get a apikey
+        uriBuilder.appendQueryParameter("apiKey", "54d7a73eeb264a25887a8f8e5deb8f6d");
+
+        Log.i(LOG_TAG, "API Search link: " + uriBuilder.toString());
+
+        return new CryptoLoader(this, uriBuilder.toString());
     }
 
 
@@ -138,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (data != null && !data.isEmpty()) {
             mAdapter.addAll(data);
         }
-
     }
 
     @Override
@@ -146,5 +172,31 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //Loader reset, so we can clear out our existing data
         mAdapter.clear();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+      switch(item.getItemId()) {
+
+          case R.id.action_setting:
+          Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+          startActivity(settingsIntent);
+          break;
+
+          case R.id.other_setting:
+          return false;
+
+      }
+
+        return super.onOptionsItemSelected(item);
     }
 }

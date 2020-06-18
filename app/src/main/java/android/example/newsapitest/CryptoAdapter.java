@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 public class CryptoAdapter  extends ArrayAdapter<CryptoInfo> {
 
+    private static final String DATE_SEPARATOR = "T";
+    private static final String AUTHOR_SPLIT = ",";
+
     public CryptoAdapter(@NonNull Context context, ArrayList<CryptoInfo> newitems) {
         super(context, 0, newitems);
     }
@@ -31,18 +34,42 @@ public class CryptoAdapter  extends ArrayAdapter<CryptoInfo> {
 
         CryptoInfo currentnewscrypto = getItem(position);
 
+
+        String primaryDate = null;
+
+        String time1 = currentnewscrypto.getmPublished();
+            if(time1.contains(DATE_SEPARATOR)) {
+                String[] separatedItems = time1.split(DATE_SEPARATOR);
+                primaryDate = separatedItems[0];
+            } else {
+                primaryDate = "This is the date";
+            }
+
+            //put the string splitter on the author, so the info is not too long.
+
+        String primaryAuthor = null;
+
+            String author = currentnewscrypto.getAuthor();
+            if (author.contains(AUTHOR_SPLIT)) {
+                String[] separatedItems = author.split(AUTHOR_SPLIT);
+                primaryAuthor = separatedItems[0];
+            } else {
+                primaryAuthor = currentnewscrypto.getAuthor();
+            }
+
+
         assert currentnewscrypto != null;
         TextView titleView = convertView.findViewById(R.id.tv1);
         titleView.setText(currentnewscrypto.getTitle());
-
-      // TextView urlview = convertView.findViewById(R.id.urllink);
-       // urlview.setText(currentnewscrypto.getUrl());
 
         TextView descView = convertView.findViewById(R.id.descview);
         descView.setText(currentnewscrypto.getDesc());
 
         TextView authorView = convertView.findViewById(R.id.authorview);
-        authorView.setText(currentnewscrypto.getAuthor());
+        authorView.setText("Author: " + primaryAuthor);
+
+        TextView dateTime = convertView.findViewById(R.id.datetime);
+        dateTime.setText("Date Published: " + primaryDate);
 
 
         return convertView;

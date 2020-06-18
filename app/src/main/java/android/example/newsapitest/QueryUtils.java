@@ -146,8 +146,18 @@ public class QueryUtils {
                String desc = currentInfo.getString("description");     //the name must be exactly the same as in the JSON info. e.g description or url
                String url = currentInfo.getString("url");               //i cannot use my own name such as weburl.
                String author = currentInfo.getString("author");
+               String published = currentInfo.getString("publishedAt");
 
-                /*
+
+               if( author != "null" && author.length() > 0) {
+                    author = currentInfo.getString("author");
+               } else {
+                  // if(author == null) {
+                   author = "No author provided";
+              //  }
+               }
+
+               /*
                 String category;
 
                 JSONArray tags = currentInfo.getJSONArray("category");
@@ -158,7 +168,7 @@ public class QueryUtils {
                 } else category = "No category name";
                 */
 
-               CryptoInfo cryptodetail = new CryptoInfo(title, desc, url, author);
+               CryptoInfo cryptodetail = new CryptoInfo(title, desc, url, author, published);
                newItems.add(cryptodetail);
             }
 
