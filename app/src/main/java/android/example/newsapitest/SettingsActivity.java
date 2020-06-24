@@ -29,10 +29,6 @@ public class SettingsActivity extends AppCompatActivity {
             //this sets the minimum date search query
             Preference minDate = findPreference(getString(R.string.settings_earliest_date_key));
             bindPreferenceSummaryToValue(minDate);
-
-            //this sets the orderBy date search query
-           // Preference orderBy = findPreference(getString(R.string.settings_orderby_key));
-           // bindPreferenceSummaryToValue(orderBy);
         }
 
         private void bindPreferenceSummaryToValue(Preference preference) {

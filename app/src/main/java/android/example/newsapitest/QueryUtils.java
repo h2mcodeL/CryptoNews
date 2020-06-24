@@ -1,7 +1,10 @@
 package android.example.newsapitest;
 
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +17,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +25,14 @@ public class QueryUtils {
 
     public static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
-
-    //Empty constructor, it must be private
     private QueryUtils() {
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static List<CryptoInfo> fetchNewData(String requestUrl) {
 
         /*
-        This thread causes the fetching of data to pause for 2 seconds odd
+        This thread causes the fetching of data to pause for a few seconds
          */
 
         try {
@@ -39,21 +41,19 @@ public class QueryUtils {
             e.printStackTrace();
         }
 
-        //Create URL object. (Also have to create a method for 'createUrl'
+        //Create URL object.
         URL url = createUrl(requestUrl);
 
         String jsonResponse = null;
         try {
-            //Create a jsonResponse class and assign to makeHttpRequest
+
+            //Create jsonResponse class and assign to makeHttpRequest
             jsonResponse = makeHttpRequest(url);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
 
-        //why have i created this.
-        List<CryptoInfo> newsInfo = extractFeatureFromJson(jsonResponse);
-
-        return newsInfo;
+        return extractFeatureFromJson(jsonResponse);
     }
 
     //this method takes in a string
@@ -68,6 +68,7 @@ public class QueryUtils {
     }
 
     //this method takes in the url from createUrl
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private static String makeHttpRequest(URL url) throws IOException {
 
         String jsonResponse = "";
@@ -93,7 +94,7 @@ public class QueryUtils {
             }
         } catch (IOException e) {
 
-                Log.e(LOG_TAG, "Problem retrieving the new info JSON result", e);
+            Log.e(LOG_TAG, "Problem retrieving the new info JSON result", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -101,35 +102,34 @@ public class QueryUtils {
             if (inputStream != null) {
                 inputStream.close();
             }
-            }
-            return jsonResponse;
+        }
+        return jsonResponse;
     }
 
 
-        private static String readFromStream (InputStream inputStream) throws IOException {
-            StringBuilder output = new StringBuilder();
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
-                BufferedReader reader = new BufferedReader(inputStreamReader);
-                String line = reader.readLine();
-                while (line != null) {
-                    output.append(line);
-                    line = reader.readLine();
-                }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private static String readFromStream (InputStream inputStream) throws IOException {
+        StringBuilder output = new StringBuilder();
+        if (inputStream != null) {
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            String line = reader.readLine();
+            while (line != null) {
+                output.append(line);
+                line = reader.readLine();
             }
-            return output.toString();
         }
+        return output.toString();
+    }
 
 
-        private static List<CryptoInfo> extractFeatureFromJson(String newsInfoJson) {
+    private static List<CryptoInfo> extractFeatureFromJson(String newsInfoJson) {
 
         if (TextUtils.isEmpty(newsInfoJson)) {
             return null;
         }
 
-
-        //we use the List<E> object and not ArrayList<E>
-        //this JSON list only has one stage, as shown above, so we go straight into the sources arraylist, no stepping in
+        //this JSON list only has one stage from the NewApi
 
         List<CryptoInfo> newItems = new ArrayList<>();
 
@@ -138,36 +138,23 @@ public class QueryUtils {
             JSONObject jsonObject = new JSONObject(newsInfoJson);
             JSONArray arr  =jsonObject.getJSONArray("articles");
 
-            //looping through features
             for (int x = 0; x< arr.length(); x++) {
                 JSONObject currentInfo = arr.getJSONObject(x);
 
-               String title = currentInfo.getString("title");            //this is json subject title - which is name
-               String desc = currentInfo.getString("description");     //the name must be exactly the same as in the JSON info. e.g description or url
-               String url = currentInfo.getString("url");               //i cannot use my own name such as weburl.
-               String author = currentInfo.getString("author");
-               String published = currentInfo.getString("publishedAt");
+                String title = currentInfo.getString("title");
+                String desc = currentInfo.getString("description");
+                String url = currentInfo.getString("url");
+                String author = currentInfo.getString("author");
+                String published = currentInfo.getString("publishedAt");
 
-
-               if( author !="null" && author.length() > 0) {
+                if(!author.equals("null") && author.length() > 0) {
                     author = currentInfo.getString("author");
-               } else {
-                   author = "No author provided";
-               }
+                } else {
+                    author = "No author provided";
+                }
 
-               /*
-                String category;
-
-                JSONArray tags = currentInfo.getJSONArray("category");
-                if(tags != null && tags.length() > 0) {
-                    JSONObject tagsObject = tags.getJSONObject(0);
-                    category = tagsObject.optString("category", "No Category");
-
-                } else category = "No category name";
-                */
-
-               CryptoInfo cryptodetail = new CryptoInfo(title, desc, url, author, published);
-               newItems.add(cryptodetail);
+                CryptoInfo cryptodetail = new CryptoInfo(title, desc, url, author, published);
+                newItems.add(cryptodetail);
             }
 
         } catch (JSONException e) {
@@ -175,9 +162,5 @@ public class QueryUtils {
 
         }
         return newItems;
-
     }
-
-
-
 }

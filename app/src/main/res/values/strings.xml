@@ -4,21 +4,22 @@ Version No: v1
 Build Date: 5-2020
 
 File Management: GIT
-
 -->
 
 
-<resources>
+<resources xmlns:ahref="http://schemas.android.com/apk/res-auto">
     <string name="app_name">Crypto News</string>
 
     <string name="searching_for_news">Searching for news items!</string>
     <string name="no_internet_connection">No Internet Connection!</string>
     <string name="no_news">Sorry no items found!</string>
 
+    <string name="crypto_news_menu">Crypto News Menu</string>
+
     <!-- settings for the shared preferences -->
     <string name="setting_earliest_date_default"> Enter the date</string>
     <string name="settings_earliest_date_key">Set order from - date </string>
-    <string name="settings_earliest_date_label"> Earliest Date e.g. 2020-05-01</string>
+    <string name="settings_earliest_date_label"> Earliest Date e.g. 2020–05-01</string>
 
     <string name="settings_max_date_default">Maximum date default </string>
     <string name="settings_max_date_key"> Earliest Date Key</string>
@@ -28,19 +29,22 @@ File Management: GIT
     <string name="settings_orderby_key"> Order by key</string>
     <string name="settings_orderby_label"> Orderby Label</string>
 
+    <!-- menu settings -->
     <string name="settings_menu_item">Settings</string>
     <string name="settings_title">Settings Title</string>
 
     <string name="version_page">App Version</string>
 
-
-
     <string name="app_version_content">
         <b>Crypto News App: Version: crypt001
-            \n Developed by h2m Design. 2020-June</b>
-        \n\nThis app uses the News API endpoint to aggregate news about all things to do with Bitcoin.
-        \nhttps://newsapi.org
+            \n Developed by h2m Design. 2020-June </b>
+        \n\nThis app uses the News API endpoint to aggregate news and information about Bitcoin, cryptocurrencies and the blockchain.
+        \n\nhttps://newsapi.org
     </string>
+
+    <string name="author_title">Author:</string>
+    <string name="date_published">Date Published:</string>
+    <string name="app_version">App Version</string>
 
 
 </resources>

@@ -1,5 +1,6 @@
 package android.example.newsapitest;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,22 +22,22 @@ public class CryptoAdapter  extends ArrayAdapter<CryptoInfo> {
         super(context, 0, newitems);
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         //check if the existing view is being reused?
 
-        //View cryptolist = convertView;
         if (convertView == null ) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_layout, parent, false);
         }
 
         CryptoInfo currentnewscrypto = getItem(position);
 
-
         String primaryDate = null;
 
+        assert currentnewscrypto != null;
         String time1 = currentnewscrypto.getmPublished();
             if(time1.contains(DATE_SEPARATOR)) {
                 String[] separatedItems = time1.split(DATE_SEPARATOR);
@@ -45,7 +46,7 @@ public class CryptoAdapter  extends ArrayAdapter<CryptoInfo> {
                 primaryDate = "This is the date";
             }
 
-            //put the string splitter on the author, so the info is not too long.
+            //put the string splitter on the author, so the info is not too long in the view.
 
         String primaryAuthor = null;
 
@@ -57,8 +58,6 @@ public class CryptoAdapter  extends ArrayAdapter<CryptoInfo> {
                 primaryAuthor = currentnewscrypto.getAuthor();
             }
 
-
-        assert currentnewscrypto != null;
         TextView titleView = convertView.findViewById(R.id.tv1);
         titleView.setText(currentnewscrypto.getTitle());
 
@@ -66,11 +65,10 @@ public class CryptoAdapter  extends ArrayAdapter<CryptoInfo> {
         descView.setText(currentnewscrypto.getDesc());
 
         TextView authorView = convertView.findViewById(R.id.authorview);
-        authorView.setText("Author: " + primaryAuthor);
+        authorView.setText(R.string.author_title + primaryAuthor);
 
         TextView dateTime = convertView.findViewById(R.id.datetime);
-        dateTime.setText("Date Published: " + primaryDate);
-
+        dateTime.setText(R.string.date_published + primaryDate);
 
         return convertView;
     }

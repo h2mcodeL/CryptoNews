@@ -29,8 +29,7 @@ class CryptoLoader extends AsyncTaskLoader<List<CryptoInfo>> {
             return null;
         }
 
-        List<CryptoInfo> newsList = QueryUtils.fetchNewData(mURL);
-        return newsList;
+        return QueryUtils.fetchNewData(mURL);
     }
 
 }

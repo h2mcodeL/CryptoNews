@@ -19,9 +19,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_centerVertical="false"
         android:text="@string/searching_for_news"
         android:textAppearance="?android:textAppearance"
-        tools:text="Item 1"/>
+        tools:text="Item 1" />
 
 
     <ProgressBar

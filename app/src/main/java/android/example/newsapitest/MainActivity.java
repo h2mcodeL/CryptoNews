@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     /* URI TO QUERY THE NEWS API WEBSITE DATASET */
 
-   String url_response = "http://newsapi.org/v2/everything?";
+   String url_link= "http://newsapi.org/v2/everything?";
 
 
     /* Loader ID */
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         String sortBy = "publishedAt";
 
         //this gets the url link to the API website
-        Uri baseUri = Uri.parse(url_response);
+        Uri baseUri = Uri.parse(url_link);
 
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
@@ -139,8 +139,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         uriBuilder.appendQueryParameter("from", orderFrom);
         uriBuilder.appendQueryParameter("sortBy",  sortBy);
 
-        //you will have to register with newapi to get a apikey
-        uriBuilder.appendQueryParameter("apiKey", "54d7a73eeb264a25887a8f8e5deb8f6d");
+        //you will need to register with NewsApi to get an apikey
+        uriBuilder.appendQueryParameter("apiKey", "ADD YOUR API KEY HERE");
 
         Log.i(LOG_TAG, "API Search link: " + uriBuilder.toString());
 
@@ -179,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
