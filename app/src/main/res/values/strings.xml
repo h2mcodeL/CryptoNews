@@ -31,9 +31,16 @@ File Management: GIT
     <string name="settings_menu_item">Settings</string>
     <string name="settings_title">Settings Title</string>
 
-    <!-- string name="newapikey">54d7a73eeb264a25887a8f8e5deb8f6d</string -->
+    <string name="version_page">App Version</string>
 
 
+
+    <string name="app_version_content">
+        <b>Crypto News App: Version: crypt001
+            \n Developed by h2m Design. 2020-June</b>
+        \n\nThis app uses the News API endpoint to aggregate news about all things to do with Bitcoin.
+        \nhttps://newsapi.org
+    </string>
 
 
 </resources>

@@ -149,12 +149,10 @@ public class QueryUtils {
                String published = currentInfo.getString("publishedAt");
 
 
-               if( author != "null" && author.length() > 0) {
+               if( author !="null" && author.length() > 0) {
                     author = currentInfo.getString("author");
                } else {
-                  // if(author == null) {
                    author = "No author provided";
-              //  }
                }
 
                /*

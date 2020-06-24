@@ -193,6 +193,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
           break;
 
           case R.id.other_setting:
+
+              Intent other_settings = new Intent(MainActivity.this, MenuActivity.class);
+              startActivity(other_settings);
           return false;
 
       }
